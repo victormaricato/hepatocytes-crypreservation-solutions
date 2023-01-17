@@ -48,6 +48,7 @@ class FeatureEngineering(FeaturePreprocessor):
     def transform(self, data: pd.DataFrame) -> None:
         data = data[self.FEATURES].copy()
         data = self._encode_categorical_features(data)
+        data = self._preprocess_numerical_features(data)
         return data
 
     def _encode_categorical_features(self, data: pd.DataFrame) -> pd.DataFrame:
@@ -60,7 +61,7 @@ class FeatureEngineering(FeaturePreprocessor):
         features = list(self.CATEGORICAL_FEATURES)
         encoded_categorical_features = pd.DataFrame(self.encoder.transform(data[features]).toarray())
         encoded_categorical_features.columns = self.encoder.get_feature_names_out(features)
-        data = pd.concat([data, encoded_categorical_features], axis=1)
+        data = data.join(encoded_categorical_features)
         data = data.drop(self.CATEGORICAL_FEATURES, axis=1)
         return data
 
@@ -69,3 +70,6 @@ class FeatureEngineering(FeaturePreprocessor):
         for feature, encoder in zip(features, self.integer_encoders):
             data[feature] = encoder.transform(data[feature])
         return data
+
+    def _preprocess_numerical_features(self, data: pd.DataFrame) -> pd.DataFrame:
+        return data.fillna(0)
