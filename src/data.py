@@ -10,4 +10,4 @@ class Data:
         for essay in ESSAYS:
             essay_data = pd.read_csv(ESSAYS_DIR + essay)
             data = pd.concat([data, essay_data])
-        return data
+        return data.reset_index()
