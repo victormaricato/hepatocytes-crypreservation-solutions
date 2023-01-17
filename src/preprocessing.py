@@ -1,4 +1,5 @@
 import pandas as pd
+
 from src.constants import CATEGORICAL_COLUMNS, NUMERICAL_COLUMNS
 
 
