@@ -79,7 +79,6 @@ class GeneticAlgorithm:
 
     def show_history(self):
         fitnesses = self._best_individuals_per_generation(self.fitnesses, self.genetic_algorithm.population_size)
-        print(self.fitnesses)
         plt.plot(fitnesses)
         plt.xlabel("Generation")
         plt.ylabel("Fitness")
