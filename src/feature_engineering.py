@@ -1,10 +1,11 @@
-from typing import Literal
+from __future__ import annotations
+
+from typing import Literal, Tuple
 
 import pandas as pd
-from sklearn.preprocessing import OneHotEncoder, LabelEncoder
-from sklearn.base import TransformerMixin
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
-from src.constants import CATEGORICAL_COLUMNS, NUMERICAL_COLUMNS, COLUMNS_TO_REMOVE, LABEL_COLUMNS, LABEL
+from src.constants import CATEGORICAL_COLUMNS, COLUMNS_TO_REMOVE, LABEL, LABEL_COLUMNS, NUMERICAL_COLUMNS
 
 
 class FeaturePreprocessor:
@@ -15,7 +16,7 @@ class FeaturePreprocessor:
 
 class FeatureSelection(FeaturePreprocessor):
     @classmethod
-    def extract_features_and_labels(cls, data: pd.DataFrame) -> (pd.DataFrame, pd.DataFrame):
+    def extract_features_and_labels(cls, data: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
         features = data[cls.FEATURES]
         labels = data[[LABEL]]
         return features, labels
@@ -25,7 +26,7 @@ class FeatureEngineering(FeaturePreprocessor):
     def __init__(self, categorical_encoding: Literal["one_hot_encoding", "integer_encoding"]) -> None:
         self.categorical_encoding = categorical_encoding
 
-    def fit(self, data: pd.DataFrame) -> None:
+    def fit(self, data: pd.DataFrame) -> FeatureEngineering:
         if self.categorical_encoding == "one_hot_encoding":
             self._fit_one_hot_encoder(data)
         elif self.categorical_encoding == "integer_encoding":
@@ -54,7 +55,8 @@ class FeatureEngineering(FeaturePreprocessor):
     def _encode_categorical_features(self, data: pd.DataFrame) -> pd.DataFrame:
         if self.categorical_encoding == "one_hot_encoding":
             return self._one_hot_encode_categorical_features(data)
-        elif self.categorical_encoding == "integer_encoding":
+
+        if self.categorical_encoding == "integer_encoding":
             return self._integer_encode_categorical_features(data)
 
     def _one_hot_encode_categorical_features(self, data: pd.DataFrame) -> pd.DataFrame:

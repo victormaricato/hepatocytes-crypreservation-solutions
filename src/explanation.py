@@ -1,5 +1,4 @@
 import shap
-from matplotlib import pyplot as plt
 
 
 def report_model(model, X_train):

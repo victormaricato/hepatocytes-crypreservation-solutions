@@ -1,6 +1,6 @@
 import pandas as pd
 
-from src.constants import ESSAYS_DIR, ESSAYS
+from src.constants import ESSAYS, ESSAYS_DIR
 
 
 class Data:

@@ -1,7 +1,7 @@
 import pandas as pd
 from matplotlib import pyplot as plt
 from scipy import stats
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 
 class Evaluation:
@@ -27,7 +27,7 @@ class Evaluation:
         return rmse, mae, r2
 
     def plot_residuals(self, y_true, y_pred):
-        slope, intercept, r_value, p_value, std_err = stats.linregress(y_true, y_pred)
+        slope, intercept, _, _, _ = stats.linregress(y_true, y_pred)
         line = slope * y_true + intercept
         plt.plot(y_true, line)
         plt.plot(y_true, y_true, color="red")

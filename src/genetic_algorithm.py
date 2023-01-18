@@ -1,22 +1,26 @@
+from random import randint
+from typing import List
+
 import pandas as pd
 from matplotlib import pyplot as plt
 from pyeasyga.pyeasyga import GeneticAlgorithm as GA
-from random import random, randint
 
 from src.model import Model
 
 
 class GeneticAlgorithm:
-    def __init__(self,
-                 X: pd.DataFrame,
-                 model: Model,
-                 population_size: int = 100,
-                 mutation_probability: float = 0.01,
-                 crossover_probability: float = 0.7,
-                 elitism_rate: float = 0.1,
-                 max_generations: int = 1000,
-                 max_stagnation: int = 100,
-                 verbose: bool = False):
+    def __init__(
+        self,
+        X: pd.DataFrame,
+        model: Model,
+        population_size: int = 100,
+        mutation_probability: float = 0.01,
+        crossover_probability: float = 0.7,
+        elitism_rate: float = 0.1,
+        max_generations: int = 1000,
+        max_stagnation: int = 100,
+        verbose: bool = False,
+    ):
 
         self.X = X
         self.model = model
@@ -35,19 +39,17 @@ class GeneticAlgorithm:
             crossover_probability=self.crossover_probability,
             mutation_probability=self.mutation_probability,
             elitism=self.elitism_rate,
-            maximise_fitness=False
+            maximise_fitness=False,
         )
 
-        self.fitnesses = []
+        self.fitnesses: List[float] = []
 
     def fitness(self, individual, data=None):
         y_pred = self.model.predict(individual)
         if len(self.fitnesses) == 0:
             self.fitnesses.append(y_pred)
         else:
-            self.fitnesses.append(
-                (y_pred if y_pred < self.fitnesses[-1] else self.fitnesses[-1])
-            )
+            self.fitnesses.append((y_pred if y_pred < self.fitnesses[-1] else self.fitnesses[-1]))
         return self.model.predict(individual)
 
     def create_individual(self, data=None):
@@ -85,10 +87,7 @@ class GeneticAlgorithm:
         plt.show()
 
     def _best_individuals_per_generation(self, fitnesses, population_size):
-        return [
-            min(fitnesses[i: i + population_size])
-            for i in range(0, len(fitnesses), population_size)
-        ]
+        return [min(fitnesses[i : i + population_size]) for i in range(0, len(fitnesses), population_size)]
 
     def report_best_individual(self):
         fitness, best_individual = self.genetic_algorithm.best_individual()

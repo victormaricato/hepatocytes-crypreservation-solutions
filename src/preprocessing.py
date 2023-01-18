@@ -1,10 +1,11 @@
+from typing import List
+
 import pandas as pd
 
 from src.constants import CATEGORICAL_COLUMNS, NUMERICAL_COLUMNS
 
 
 class DataPreprocessor:
-
     def preprocess(self, data: pd.DataFrame) -> pd.DataFrame:
         data = data.copy()
         data = self._trim_space_from_columns(data)
@@ -24,7 +25,7 @@ class DataPreprocessor:
         return data
 
     @staticmethod
-    def _process_numerical_columns(data: pd.DataFrame, numerical_columns: set) -> pd.DataFrame:
+    def _process_numerical_columns(data: pd.DataFrame, numerical_columns: List[str]) -> pd.DataFrame:
         numerical_data = data[numerical_columns].copy()
         for feature in numerical_columns:
             numerical_data[feature] = numerical_data[feature].str.replace(",", ".")
@@ -33,7 +34,7 @@ class DataPreprocessor:
         return numerical_data
 
     @staticmethod
-    def _process_categorical_columns(data: pd.DataFrame, categorical_columns: set) -> pd.DataFrame:
+    def _process_categorical_columns(data: pd.DataFrame, categorical_columns: List[str]) -> pd.DataFrame:
         categorical_data = data[categorical_columns].copy()
         categorical_data = categorical_data.replace("x", None)
         categorical_data = categorical_data.astype(str)
