@@ -1,6 +1,8 @@
 # from lazypredict.Supervised import LazyRegressor
 from typing import Literal
 
+import joblib
+import numpy as np
 from sklearn.ensemble import ExtraTreesRegressor, RandomForestRegressor
 from sklearn.linear_model import ElasticNet, Lasso, LinearRegression, Ridge
 from sklearn.neighbors import KNeighborsRegressor
@@ -18,6 +20,8 @@ models = {
     "ExtraTreesRegressor": ExtraTreesRegressor,
     "XGBRegressor": XGBRegressor,
 }
+
+np.random.seed(42)
 
 
 class Model:
@@ -42,3 +46,6 @@ class Model:
 
     def predict(self, X):
         return self.model.predict(X)
+
+    def save(self, path):
+        joblib.dump(self.model, path)

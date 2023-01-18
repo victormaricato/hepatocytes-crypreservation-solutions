@@ -1,4 +1,7 @@
+import numpy as np
 from lazypredict.Supervised import LazyRegressor
+
+np.random.seed(42)
 
 
 class ModelSelection:

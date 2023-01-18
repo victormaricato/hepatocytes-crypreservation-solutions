@@ -7,7 +7,8 @@ module = [
   "matplotlib",
   "shap",
   "lazypredict.*",
-  "pyeasyga.*"
+  "pyeasyga.*",
+  "joblib"
 ]
 ignore_missing_imports = true
 

@@ -63,3 +63,5 @@ LABEL_COLUMNS = list(
 )
 
 LABEL = "%_QUEDA_DA_VIABILIDADE"
+
+MODEL_PATH = DATA_DIR + "model.h5"
