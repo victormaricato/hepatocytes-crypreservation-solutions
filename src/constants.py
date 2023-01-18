@@ -45,8 +45,11 @@ NUMERICAL_COLUMNS = list({
     'Di-rhamnolipids'
 })
 
-MISCELLANEOUS_COLUMNS = list({
-    "REFERÊNCIA"
+COLUMNS_TO_REMOVE = list({ # Removed from model
+    "REFERÊNCIA",
+    "TEMPO_DE_AVALIAÇÃO_DA_VIABILIDADE",
+    "TESTE_DE_VIABILIDADE",
+    "ESPÉCIE/LINHAGEM",
 })
 
 LABEL_COLUMNS = list({

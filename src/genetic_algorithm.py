@@ -90,3 +90,8 @@ class GeneticAlgorithm:
             min(fitnesses[i: i + population_size])
             for i in range(0, len(fitnesses), population_size)
         ]
+
+    def report_best_individual(self):
+        fitness, best_individual = self.genetic_algorithm.best_individual()
+        print(f"Best individual:\n{best_individual.iloc[0].to_markdown()}")
+        print(f"Fitness: {fitness}")
